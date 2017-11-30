@@ -51,8 +51,17 @@ public class zeroSumBot{
 	    }
 	}
 
+	Planet enem = null;
+	double enemScore = Double.MIN_VALUE;
+	for (Planet p : pw.NotMyPlanets()) {
+	    double score = (double)p.NumShips();
+	    if (score > enemScore) {
+		enemScore = score;
+		enem = p;
+	    }
+	}
 	if (dest!=null && weakdest!=null)
-		if((double)dest.NumShips()>(double)weakdest.NumShips())
+		if((double)enem.NumShips()/2>(double)weakdest.NumShips())
 			dest=weakdest;
 	if (source != null && dest != null) {
 	    int numShips = source.NumShips() / 2;
