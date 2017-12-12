@@ -7,7 +7,7 @@ BullyBot.jar: BullyBot.class
 	jar cfe BullyBot.jar BullyBot BullyBot.class Fleet.class Planet.class PlanetWars.class
 
 clean:
-	rm -rf *.class *.jar
+	rm -rf *.class
 
 DualBot.class:
 	javac DualBot.java
