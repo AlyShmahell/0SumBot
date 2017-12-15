@@ -9,7 +9,7 @@
 #
 # Author: Aly Shmahell
 rule:
-	javac *.java
-	jar cmvf manifest.mf 0SumBot.jar *.class
+	javac Fleet.java Planet.java PlanetWars.java zeroSumBot.java
+	jar cmvf manifest.mf 0SumBot.jar Fleet.class Planet.class PlanetWars.class zeroSumBot.class
 clean:
 	rm -rf *.class

@@ -12,129 +12,129 @@
  */
 
 import java.util.*;
+import java.io.*;
 
 public class zeroSumBot {
   
   public static void DoTurn(PlanetWars pw) {
+  	  int numFleets = 4;
     
-    int numFleets = 1;
-    boolean attackMode = false;
-    
-    if (pw.NumShips(1) > pw.NumShips(2)) {
-      if (pw.Production(1) > pw.Production(2)) {
-        numFleets = 1;
-        attackMode = true;
-      } else {
-        numFleets = 3;
-      }
-    } else if (pw.Production(1) > pw.Production(2)) {
-      numFleets = 1;
-    } else {
-      numFleets = 5;
-    }
-    
-    if (pw.MyFleets().size() >= numFleets) {
-      return;
-    }
+	/**
+	 * Initial Parameters
+	 */
+    Planet base = null;
+    Planet target = null;
+    Random rand = new Random();
+    int baseNumShips = 0;
+    boolean AttackMode = false;
     
     /**
-     * find the strongest ally planet
+     * Optimized Parameters
      */
-    Planet strongestAllyPlanet = null;
-    double strongestAllyPlanetScore = Double.MIN_VALUE;
-    for (Planet p : pw.MyPlanets()) {
-      double score = (double) p.NumShips();
-      if (score > strongestAllyPlanetScore) {
-        strongestAllyPlanetScore = score;
-        strongestAllyPlanet = p;
-      }
-    }
+    int neatShipNumMin = 2;
+    int neatShipNumMax = 30;
+    int neatPlanetNumMin = 1;
+    int neatPlanetNumMax = 7;
+    int neatProductionMin = 2;
+    int neatProductionMax = 20;
+    int numFleet = 3;
+    int myCounterMax = 3;
+    int enemyCounterMax = 3;
+    int neutralCounterMax = 3;
+    int myShipsMax = 30;
+    int myShipsMin = 20;
+    int enemyShipsMax = 30;
+    int enemyShipsMin = 20;
+    int neutralShipsMax = 30;
+    int neutralShipsMin = 20;
+    int myGrowthRateMax = 30;
+    int myGrowthRateMin = 20;
+    int enemyGrowthRateMax = 30;
+    int enemyGrowthRateMin = 20;
+    int neutralGrowthRateMax = 30;
+    int neutralGrowthRateMin = 20;
+    int baseNumShipsDivider = 2;
+    int neatDistanceMin = 1;
+    int neatDistanceMax = 20;
     
     /**
-     * find the weakest ally planet
+     * attack mode selecter
      */
-    Planet weakestAllyPlanet = null;
-    double weakestAllyPlanetScore = Double.MIN_VALUE;
-    for (Planet p : pw.MyPlanets()) {
-      double score = 1.0 / (1 + p.NumShips());
-      if (score > weakestAllyPlanetScore) {
-        weakestAllyPlanetScore = score;
-        weakestAllyPlanet = p;
+    if(pw.NumShips(1) > neatShipNumMin  + rand.nextInt()*(neatShipNumMax-neatShipNumMin) && pw.MyPlanets().size() >= neatPlanetNumMin + rand.nextInt()*(neatPlanetNumMax - neatPlanetNumMax) && pw.Production(1) > neatProductionMin + rand.nextInt()*(neatProductionMax - neatProductionMin))
+    	AttackMode = true;
+    else
+    	AttackMode = false;
+    
+    
+    int counter = 0;
+    while(base==null && counter<=myCounterMax){
+     counter++;
+     for(Planet p : pw.MyPlanets()){
+      if(p.NumShips()>= myShipsMin + rand.nextInt() * (myShipsMax - myShipsMin) && p.GrowthRate()>= myGrowthRateMin + rand.nextInt() * (myGrowthRateMax - myGrowthRateMin)){
+      	  base = p;
+          baseNumShips = base.NumShips()/baseNumShipsDivider;
+          System.err.println("**** debugging base full");
       }
+     }
+    }
+    if(base==null)
+    {
+    	System.err.println("**** debugging base null");
+    	for(Planet p : pw.MyPlanets()){
+    	  base = p;
+          baseNumShips = base.NumShips()/baseNumShipsDivider;
+          break;
+    	}
     }
     
-    /**
-     * find the strongest enemy planet
-     */
-    Planet strongestEnemyPlanet = null;
-    double strongestEnemyPlanetScore = Double.MIN_VALUE;
-    for (Planet p : pw.EnemyPlanets()) {
-      double score = (double) p.NumShips();
-      if (score > strongestEnemyPlanetScore) {
-        strongestEnemyPlanetScore = score;
-        strongestEnemyPlanet = p;
-      }
-    }
+    if(AttackMode == true){
+       counter = 0;
+       while(target==null && counter<=enemyCounterMax){
+        counter++;
+        for(Planet p : pw.EnemyPlanets()){
+          	/**
+          	 * I have two options, target.numships < basenumships or target.numships < optimized_value
+          	 */
+            if(p.NumShips()<= enemyShipsMin + rand.nextInt() * (enemyShipsMax - enemyShipsMin) && p.GrowthRate()>= enemyGrowthRateMin + rand.nextInt() * (enemyGrowthRateMax - enemyGrowthRateMin) && pw.Distance(p,base)<=neatDistanceMin + rand.nextInt()*(neatDistanceMax-neatDistanceMin)){
+      	      target = p;
+          }
+        }
+       }
     
-    /**
-     * find the weakest enemy planet
-     */
-    Planet weakestEnemyPlanet = null;
-    double weakestEnemyPlanetScore = Double.MIN_VALUE;
-    for (Planet p : pw.EnemyPlanets()) {
-      double score = 1.0 / (1 + p.NumShips());
-      if (score > weakestEnemyPlanetScore) {
-        weakestEnemyPlanetScore = score;
-        weakestEnemyPlanet = p;
-      }
-    }
-    
-        /**
-     * find the strongest neutral planet
-     */
-    Planet strongestNeutralPlanet = null;
-    double strongestNeutralPlanetScore = Double.MIN_VALUE;
-    for (Planet p : pw.NeutralPlanets()) {
-      double score = (double) p.NumShips();
-      if (score > strongestNeutralPlanetScore) {
-        strongestNeutralPlanettScore = score;
-        strongestNeutralPlanet = p;
-      }
-    }
-    
-    /**
-     * find the weakest neutral planet
-     */
-    Planet weakestNeutralPlanet = null;
-    double weakestNeutralPlanetScore = Double.MIN_VALUE;
-    for (Planet p : pw.NeutralPlanets()) {
-      double score = 1.0 / (1 + p.NumShips());
-      if (score > weakestNeutralPlanetScore) {
-        weakestNeutralPlanetScore = score;
-        weakestNeutralPlanet = p;
-      }
-    }
-    /**
-     * ***********************************************
-     */
-    
-    /**
-     * if the strongest enemy planet is capable of destroying out weakest planet,
-     * our destination planet becomes our weakest planet
-     */
-    if (dest != null && needsReinforcement != null) {
-      if ((double) StrongestEnemyPlanet.NumShips() / 2 > (double) needsReinforcement.NumShips()) {
-        dest = needsReinforcement;
+      if(target == null){
+      	counter = 0;
+        while(target==null && counter<=neutralCounterMax){
+         counter++;
+         for(Planet p : pw.NeutralPlanets()){
+          	/**
+          	 * I have two options, target.numships < basenumships or target.numships < optimized_value
+          	 */
+            if(p.NumShips()<= neutralShipsMin + rand.nextInt() * (neutralShipsMax - neutralShipsMin) && p.GrowthRate()>= neutralGrowthRateMin + rand.nextInt() * (neutralGrowthRateMax - neutralGrowthRateMin) && pw.Distance(p,base)<=neatDistanceMin + rand.nextInt()*(neatDistanceMax-neatDistanceMin)){
+      	      target = p;
+            }
+         }
+        }
       }
     }
     
-    /**
+    if(AttackMode == false){
+     counter = 0;
+     while(target==null && target!=base && counter<=myCounterMax){
+       counter++;
+       for(Planet p : pw.MyPlanets()){
+         if(p.NumShips()<= myShipsMin + rand.nextInt() * (myShipsMax - myShipsMin) && p.GrowthRate()>= myGrowthRateMin + rand.nextInt() * (myGrowthRateMax - myGrowthRateMin) && pw.Distance(p,base)<=neatDistanceMin + rand.nextInt()*(neatDistanceMax-neatDistanceMin)){
+      	  target = p;
+         }
+       }
+     }
+    }
+    /*************************************************
      * send fleet from our source planet to the destination planet
      */
-    if (source != null && dest != null) {
-      int numShips = source.NumShips() / 2;
-      pw.IssueOrder(source, dest, numShips);
-    }
+    if (base != null && target != null)
+      pw.IssueOrder(base, target, baseNumShips);
+    else
+    	return;
   }
   
   public static void main(String[] args) {

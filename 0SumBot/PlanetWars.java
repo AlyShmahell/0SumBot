@@ -33,6 +33,10 @@ public class PlanetWars {
     public Planet GetPlanet(int planetID) {
         return planets.get(planetID);
     }
+    
+    public Planet DestPlanet(Fleet f) {
+        return planets.get(f.DestinationPlanet());
+    }
 
     // Returns the number of fleets.
     public int NumFleets() {
