@@ -17,9 +17,7 @@ import java.io.*;
 public class zeroSumBot {
 
   public static void DoTurn(PlanetWars pw) {
-  	  
-    System.err.println("do turn init!");
-    
+ 
 	/**
 	 * Initial Parameters
 	 */
@@ -104,8 +102,6 @@ public class zeroSumBot {
 
     int sDistance = oDistance + rand.nextInt(oDistanceR);
     
-    
-    System.err.println("debugging before attackmode selection");
     /**
      * attack mode selection
      */
@@ -114,7 +110,6 @@ public class zeroSumBot {
     else
     	AttackMode = false;
    
-    System.err.println("debugging before base selection, attackmode= "+AttackMode);
     /**
      * base selection
      */
@@ -126,7 +121,6 @@ public class zeroSumBot {
       else if(p.NumShips() > base.NumShips() && p.GrowthRate() > base.GrowthRate())
       	  	  base = p;
      }
-     System.err.println("debugging before base force selection");
     /**
      * base force selection
      */
@@ -146,7 +140,6 @@ public class zeroSumBot {
      */
     baseFleet = (int) base.NumShips()/fleetDivider;
     
-    System.err.println("debugging after base selection");
     
     if(AttackMode == true){
     	/**
@@ -217,8 +210,9 @@ public class zeroSumBot {
 			}
 		}     
     }
-    /*************************************************
-     * send fleet from our source planet to the destination planet
+    
+    /**
+     * send fleet from base to target
      */
     if (base != null && target != null)
       pw.IssueOrder(base, target, baseFleet);
