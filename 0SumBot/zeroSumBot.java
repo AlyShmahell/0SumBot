@@ -172,7 +172,7 @@ public class zeroSumBot {
 			for (Planet np : pw.NotMyPlanets()) {
 				double score;
 				if (mapDispersion < oMapDispersion)
-				    score = (double) (1 + np.GrowthRate()) / np.NumShips() * pw.Distance(base,np);
+				    score = (double) (1 + np.GrowthRate()) / (np.NumShips() * pw.Distance(base,np));
 			    else
 				    score = (double) 1 / pw.Distance(base,np);
 				if (score > npScore) {
