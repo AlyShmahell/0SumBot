@@ -65,17 +65,13 @@ public class zeroSumBot {
      */
     int oDistance = 10;
     /**
-     * optimized for player's total number of fleets
-     */
-    int numFleets = 6;
-    /**
      * optimized for player's division of base ships into remaining base ships and base fleet
      */
      int fleetDivider = 2;
     /**
      * mapDispersion
      */
-     int oMapDispersion = 50;
+     int oLocalMinima = 50;
     
     /**
      * attack mode selection
@@ -120,39 +116,39 @@ public class zeroSumBot {
     /**
      * finding map dispersion
      */
-     int mapDispersion = 0;
+     int localMinima = 0;
      Planet closestEnemy = null;
-     double closestEnemyScore = Double.MIN_VALUE;
+     double closestEnemyScore = Double.MAX_VALUE;
         for (Planet e : pw.EnemyPlanets()) {
             double score = (double) pw.Distance(base,e);
-            if (score > closestEnemyScore) {
+            if (score < closestEnemyScore) {
                 closestEnemyScore = score;
                 closestEnemy = e;
             }
         }
      if(closestEnemy==null)
         	return;
-     mapDispersion =  pw.Distance(base,closestEnemy);
+     localMinima =  pw.Distance(base,closestEnemy);
      
      /**
       * choosing target
       */
     if(AttackMode == true){
     	/**
-    	 * target selection from enemy
+    	 * target selection from enemy or Neutral
     	 */
-		for(Planet e : pw.EnemyPlanets()){
-		  if(target==null){
-			  if(e.NumShips() < oENumShips && e.GrowthRate() < oEGrowthRate && pw.Distance(base,e) < oDistance)
-				  target = e;
-		  }
-		  else if(e.NumShips() < target.NumShips() && e.GrowthRate() < target.GrowthRate() && pw.Distance(base,e) < pw.Distance(base,target))
-				  target = e;
-		 } 
-		/**
-		 * target force selection from neutrals
-		 */
-		if(target == null)
+    	 if(localMinima < oLocalMinima)
+    	 {
+			for(Planet e : pw.EnemyPlanets()){
+			  if(target==null){
+				  if(e.NumShips() < oENumShips && e.GrowthRate() < oEGrowthRate && pw.Distance(base,e) < oDistance)
+					  target = e;
+			  }
+			  else if(e.NumShips() < target.NumShips() && e.GrowthRate() < target.GrowthRate() && pw.Distance(base,e) < pw.Distance(base,target))
+					  target = e;
+			 } 
+    	 }
+		else
 		{
 			for(Planet n : pw.NeutralPlanets()){
 			  if(target==null){
@@ -171,7 +167,7 @@ public class zeroSumBot {
 			double npScore = Double.MIN_VALUE;
 			for (Planet np : pw.NotMyPlanets()) {
 				double score;
-				if (mapDispersion < oMapDispersion)
+				if (localMinima < oLocalMinima)
 				    score = (double) (1 + np.GrowthRate()) / (np.NumShips() * pw.Distance(base,np));
 			    else
 				    score = (double) 1 / pw.Distance(base,np);
@@ -203,7 +199,7 @@ public class zeroSumBot {
 			double targetScore = Double.MIN_VALUE;
 			for (Planet p : pw.MyPlanets()) {    
 				double score;
-				if(mapDispersion < oMapDispersion)
+				if(localMinima < oLocalMinima)
 				    score = (double) (1 + p.GrowthRate()) / (p.NumShips() * pw.Distance(base,p));
 			    else
 			    	score = (double) 1 / pw.Distance(base,p);
