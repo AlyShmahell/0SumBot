@@ -11,6 +11,5 @@
 #
 # Author: Aly Shmahell
 
-(cd 0SumBot && make && make clean)
-java -jar PlanetWars-viz/PlayGame.jar 2>&1 "maps/map9.txt" 10000 10000 log.txt "java -jar 3rdPartyBots/Genebot.jar" "java -jar
-./0SumBot/0SumBot.jar" 2>&1 >/dev/null | echo $(tail -1) > winner.txt
+(cd 0SumBot && make 2>&1 > /dev/null && make clean 2>&1 > /dev/null)
+java -jar PlanetWars-viz/PlayGame.jar 2>&1 "maps/map44.txt" 10000 10000 log.txt "java -jar 3rdPartyBots/Genebot.jar" "java -jar ./0SumBot/0SumBot.jar" 2>&1 >/dev/null | echo $(tail -1) > winner.txt
