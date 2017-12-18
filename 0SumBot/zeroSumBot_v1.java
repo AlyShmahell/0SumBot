@@ -35,43 +35,45 @@ public class zeroSumBot {
     /**
      * optimized for Player's total number of ships to total ship production ratio
      */
-    double oPWNumShipsProduction1 = 0.6552286530005225;
+    double oPWNumShipsProduction1 = 0.6;
     /**
      * optimized for player's base planet's total number of ships
      */
-    int oPNumShips = 37;
+    int oPNumShips = 21;
     /**
      * optimized for player's base planet's growth rate
      */
-     int oPGrowthRate = 27;
+     int oPGrowthRate = 20;
     /**
      * optimized for enemy's target planet's total number of ships
      */
-    int oENumShips = 21;
+    int oENumShips = 20;
     /**
      * optimized for enemy's target planet's growth rate
      */
-    int oEGrowthRate = 28;
+    int oEGrowthRate = 30;
     /**
      * optimized for neutrals' target planet's total number of ships
      */
-    int oNNumShips = 34;
+    int oNNumShips = 30;
     /**
      * optimized for neutrals' target planet's growth rate
      */
-    int oNGrowthRate = 34; 
+    int oNGrowthRate = 30; 
     /**
      * optimized for good striking distance
      */
-    int oDistance = 14;
+    int oDistance = 10;
     /**
      * optimized for player's division of base ships into remaining base ships and base fleet
      */
-     int fleetDivider = 3;
+     int fleetDivider = 2;
     /**
-     * mapDispersion
+     * map dispersion
      */
-     int oLocalMinima = 51;
+     int oELocalMinima = 50;
+     int oNLocalMinima = 30;
+     int oPLocalMinima = 20;
     
     /**
      * attack mode selection
@@ -114,9 +116,9 @@ public class zeroSumBot {
     baseFleet = (int) base.NumShips()/fleetDivider;
     
     /**
-     * finding map dispersion
+     * finding enemy local minima
      */
-     int localMinima = 0;
+     int eLocalMinima = 0;
      Planet closestEnemy = null;
      double closestEnemyScore = Double.MAX_VALUE;
         for (Planet e : pw.EnemyPlanets()) {
@@ -128,7 +130,42 @@ public class zeroSumBot {
         }
      if(closestEnemy==null)
         	return;
-     localMinima =  pw.Distance(base,closestEnemy);
+     eLocalMinima =  pw.Distance(base,closestEnemy);
+     
+    /**
+     * finding neutrals' local minima
+     */
+     int nLocalMinima = 0;
+     Planet closestNeutral = null;
+     double closestNeutralScore = Double.MAX_VALUE;
+        for (Planet n : pw.NeutralPlanets()) {
+            double score = (double) pw.Distance(base,n);
+            if (score < closestNeutralScore) {
+                closestNeutralScore = score;
+                closestNeutral = n;
+            }
+        }
+     if(closestNeutral==null)
+        	return;
+     nLocalMinima =  pw.Distance(base,closestNeutral);
+     
+    /**
+     * finding neutrals' local minima
+     */
+     int pLocalMinima = 0;
+     Planet closestAlly = null;
+     double closestAllyScore = Double.MAX_VALUE;
+        for (Planet p : pw.MyPlanets()) {
+            double score = (double) pw.Distance(base,p);
+            if (score < closestAllyScore && base!=p) {
+                closestAllyScore = score;
+                closestAlly = p;
+            }
+        }
+     if(closestAlly==null)
+        	pLocalMinima = 0;
+        else
+		pLocalMinima =  pw.Distance(base,closestAlly);
      
      /**
       * choosing target
@@ -137,7 +174,7 @@ public class zeroSumBot {
     	/**
     	 * target selection from enemy or Neutral
     	 */
-    	 if(localMinima < oLocalMinima)
+    	 if(eLocalMinima < oELocalMinima)
     	 {
 			for(Planet e : pw.EnemyPlanets()){
 			  if(target==null){
@@ -148,7 +185,7 @@ public class zeroSumBot {
 					  target = e;
 			 } 
     	 }
-		else
+		if(nLocalMinima < oNLocalMinima && target==null)
 		{
 			for(Planet n : pw.NeutralPlanets()){
 			  if(target==null){
@@ -167,7 +204,7 @@ public class zeroSumBot {
 			double npScore = Double.MIN_VALUE;
 			for (Planet np : pw.NotMyPlanets()) {
 				double score;
-				if (localMinima < oLocalMinima)
+				if (eLocalMinima < oELocalMinima)
 				    score = (double) (1 + np.GrowthRate()) / (np.NumShips() * pw.Distance(base,np));
 			    else
 				    score = (double) 1 / pw.Distance(base,np);
@@ -199,7 +236,7 @@ public class zeroSumBot {
 			double targetScore = Double.MIN_VALUE;
 			for (Planet p : pw.MyPlanets()) {    
 				double score;
-				if(localMinima < oLocalMinima)
+				if(pLocalMinima < oPLocalMinima)
 				    score = (double) (1 + p.GrowthRate()) / (p.NumShips() * pw.Distance(base,p));
 			    else
 			    	score = (double) 1 / pw.Distance(base,p);

@@ -9,11 +9,7 @@
 # CONDITIONS OF ANY KIND, either express or implied. See the License for the
 # specific language governing permissions and limitations under the License.
 #
-# Compile and run 0SumBot
 # Author: Aly Shmahell
 
-(cd 0SumBot && make && make clean)
-(cd exampleBots && make && make clean)
-(cd PlanetWars-viz && make && make clean)
-java -jar PlanetWars-viz/PlayGame.jar "maps/map19.txt" 10000 10000 "log.txt" "java -jar 3rdPartyBots/Genebot.jar" "java -jar
-./0SumBot/0SumBot.jar" | java -jar PlanetWars-viz/ShowGame.jar
+(cd G0Bot && make 2>&1 > /dev/null && make clean 2>&1 > /dev/null)
+java -jar PlanetWars-viz/PlayGame.jar 2>&1 "maps/map92.txt" 10000 10000 log.txt "java -jar 3rdPartyBots/Genebot.jar" "java -jar ./G0Bot/G0Bot.jar" 2>&1 >/dev/null | echo $(tail -1) > winner.txt

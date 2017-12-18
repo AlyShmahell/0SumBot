@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # Copyright 2017 Aly Shmahell
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not
 # use this file except in compliance with the License. You may obtain a copy
@@ -9,11 +7,9 @@
 # CONDITIONS OF ANY KIND, either express or implied. See the License for the
 # specific language governing permissions and limitations under the License.
 #
-# Compile and run 0SumBot
 # Author: Aly Shmahell
-
-(cd 0SumBot && make && make clean)
-(cd exampleBots && make && make clean)
-(cd PlanetWars-viz && make && make clean)
-java -jar PlanetWars-viz/PlayGame.jar "maps/map19.txt" 10000 10000 "log.txt" "java -jar 3rdPartyBots/Genebot.jar" "java -jar
-./0SumBot/0SumBot.jar" | java -jar PlanetWars-viz/ShowGame.jar
+rule:
+	javac Fleet.java Planet.java PlanetWars.java G0Bot.java
+	jar cmvf manifest.mf G0Bot.jar Fleet.class Planet.class PlanetWars.class G0Bot.class
+clean:
+	rm -rf *.class

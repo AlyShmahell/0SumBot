@@ -9,9 +9,9 @@
 # CONDITIONS OF ANY KIND, either express or implied. See the License for the
 # specific language governing permissions and limitations under the License.
 #
-# run
+# run 0SumBot
 # Author: Aly Shmahell
 
 (cd 0SumBot && make && make clean)
-java -jar PlanetWars-viz/PlayGame.jar "maps/map9.txt" 10000 10000 "log.txt" "java -jar 3rdPartyBots/Genebot.jar" "java -jar
+java -jar PlanetWars-viz/PlayGame.jar "maps/map11.txt" 10000 10000 "log.txt" "java -jar 3rdPartyBots/Genebot.jar" "java -jar
 ./0SumBot/0SumBot.jar" | java -jar PlanetWars-viz/ShowGame.jar

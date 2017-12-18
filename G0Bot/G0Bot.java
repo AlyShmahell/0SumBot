@@ -14,7 +14,7 @@
 import java.util.*;
 import java.io.*;
 
-public class zeroSumBot {
+public class G0Bot {
 
   public static void DoTurn(PlanetWars pw) {
  
@@ -35,7 +35,7 @@ public class zeroSumBot {
     /**
      * optimized for Player's total number of ships to total ship production ratio
      */
-    double oPWNumShipsProduction1 = 0.6552286530005225;
+    double oPWNumShipsProduction1 = 0.656043224074;
     /**
      * optimized for player's base planet's total number of ships
      */
@@ -43,7 +43,7 @@ public class zeroSumBot {
     /**
      * optimized for player's base planet's growth rate
      */
-     int oPGrowthRate = 27;
+     int oPGrowthRate = 20;
     /**
      * optimized for enemy's target planet's total number of ships
      */
@@ -59,7 +59,7 @@ public class zeroSumBot {
     /**
      * optimized for neutrals' target planet's growth rate
      */
-    int oNGrowthRate = 34; 
+    int oNGrowthRate = 34;
     /**
      * optimized for good striking distance
      */
@@ -67,11 +67,11 @@ public class zeroSumBot {
     /**
      * optimized for player's division of base ships into remaining base ships and base fleet
      */
-     int fleetDivider = 3;
+    int fleetDivider = 3;
     /**
      * mapDispersion
      */
-     int oLocalMinima = 51;
+    int oLocalMinima = 51;
     
     /**
      * attack mode selection
