@@ -14,7 +14,7 @@
 import java.util.*;
 import java.io.*;
 
-public class zeroSumBot {
+public class 1SumBot {
 
   public static void DoTurn(PlanetWars pw) {
  

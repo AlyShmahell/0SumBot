@@ -43,7 +43,7 @@ class individual(object):
 		# setting default fitness for sorting population later
 		self.default_fitness = 1
 		
-	def fitness(self):
+	def fitness(self, firstMap):
 		# set proteins to null
 		self.proteins = []
 		# building optimized parameters (proteins) from genotype and amino-acids (upper bounds)
@@ -64,9 +64,7 @@ class individual(object):
 		
 		# fitness is calculated with bot performance over multiple maps
 		fitcounter = 0.0;
-		
-		# choosing a lower bound for a map range
-		firstMap = random.randint(1,95)
+
 		for i in range(firstMap,firstMap+5):
 			print (colors.header + "map chosen: "+str(i))
 			# injecting the map we want inside the fitOnot script
@@ -138,15 +136,18 @@ class G0GA(object):
 				k = random.randint(0,size-1)
 			while (l == i or l == j or k == l):
 				l = random.randint(0,size-1)
+				
+			# choosing a lower bound for a map range
+			firstMap = random.randint(1,95)
 
 			citizen1 = self.population[i]
 			citizen2 = self.population[j]
 			citizen3 = self.population[k]
 			citizen4 = self.population[l]
-			citizen1f = citizen1.fitness()
-			citizen2f = citizen2.fitness()
-			citizen3f = citizen3.fitness()
-			citizen4f = citizen4.fitness()
+			citizen1f = citizen1.fitness(firstMap)
+			citizen2f = citizen2.fitness(firstMap)
+			citizen3f = citizen3.fitness(firstMap)
+			citizen4f = citizen4.fitness(firstMap)
 
 			if citizen1f > citizen2f:
 				winner1 = citizen1
@@ -173,15 +174,15 @@ class G0GA(object):
 				
 			if random.random() <= self.mutation_probability:
 				child1 = self.mutate(child1)
-				self.child1f = child1.fitness()
+				self.child1f = child1.fitness(firstMap)
 			if random.random() <= self.mutation_probability:
 				child2 = self.mutate(child2)
-				self.child2f = child2.fitness()
+				self.child2f = child2.fitness(firstMap)
 				
 			if self.child1f < 0:
-				self.child1f = child1.fitness()
+				self.child1f = child1.fitness(firstMap)
 			if self.child2f < 0:
-				self.child2f = child2.fitness()
+				self.child2f = child2.fitness(firstMap)
 			
 			if self.child1f > self.winner1f and self.child1f > self.winner2f:
 				newpopulation.append(child1)
@@ -242,7 +243,9 @@ class G0GA(object):
 		print colors.header + "Era Results"
 		self.display()
 		print colors.ok + "Solidifying final winner"
-		result = self.population[self.population_size-1].fitness()
+		# choosing a lower bound for a map range
+		firstMap = random.randint(1,95)
+		result = self.population[self.population_size-1].fitness(firstMap)
 		
 
 if __name__ == '__main__':

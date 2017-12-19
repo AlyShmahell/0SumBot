@@ -13,5 +13,5 @@
 # Author: Aly Shmahell
 
 (cd G0Bot && make && make clean)
-java -jar PlanetWars-viz/PlayGame.jar "maps/map19.txt" 10000 10000 "log.txt" "java -jar 3rdPartyBots/Genebot.jar" "java -jar
+java -jar PlanetWars-viz/PlayGame.jar "maps/map9.txt" 10000 10000 "log.txt" "java -jar 3rdPartyBots/Genebot.jar" "java -jar
 ./G0Bot/G0Bot.jar" | java -jar PlanetWars-viz/ShowGame.jar

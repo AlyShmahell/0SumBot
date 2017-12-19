@@ -35,7 +35,7 @@ public class G0Bot {
     /**
      * optimized for Player's total number of ships to total ship production ratio
      */
-    double oPWNumShipsProduction1 = 0.656043224074;
+    double oPWNumShipsProduction1 = 0.655095720057;
     /**
      * optimized for player's base planet's total number of ships
      */

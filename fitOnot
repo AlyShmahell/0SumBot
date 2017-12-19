@@ -12,4 +12,4 @@
 # Author: Aly Shmahell
 
 (cd G0Bot && make 2>&1 > /dev/null && make clean 2>&1 > /dev/null)
-java -jar PlanetWars-viz/PlayGame.jar 2>&1 "maps/map92.txt" 10000 10000 log.txt "java -jar 3rdPartyBots/Genebot.jar" "java -jar ./G0Bot/G0Bot.jar" 2>&1 >/dev/null | echo $(tail -1) > winner.txt
+java -jar PlanetWars-viz/PlayGame.jar 2>&1 "maps/map94.txt" 10000 10000 log.txt "java -jar 3rdPartyBots/Genebot.jar" "java -jar ./G0Bot/G0Bot.jar" 2>&1 >/dev/null | echo $(tail -1) > winner.txt

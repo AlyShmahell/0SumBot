@@ -13,5 +13,5 @@
 # Author: Aly Shmahell
 
 (cd 0SumBot && make && make clean)
-java -jar PlanetWars-viz/PlayGame.jar "maps/map11.txt" 10000 10000 "log.txt" "java -jar 3rdPartyBots/Genebot.jar" "java -jar
+java -jar PlanetWars-viz/PlayGame.jar "maps/map100.txt" 10000 10000 "log.txt" "java -jar 3rdPartyBots/Genebot.jar" "java -jar
 ./0SumBot/0SumBot.jar" | java -jar PlanetWars-viz/ShowGame.jar
