@@ -1,4 +1,8 @@
 \documentclass[12pt]{report}
+\usepackage[a4paper,bindingoffset=0.2in,%
+left=1in,right=1in,top=1in,bottom=1in,%
+footskip=.25in]{geometry}
+\usepackage[affil-it]{authblk}
 \usepackage[utf8]{inputenc}
 \usepackage{listings}
 \usepackage{color}
@@ -27,33 +31,39 @@
 	breakatwhitespace=false,         
 	breaklines=true,                 
 	captionpos=b,                    
-	keepspaces=true, 
-	showspaces=false,                
-	showstringspaces=false,
-	showtabs=false,                  
-	tabsize=2
+	keepspaces=true
 }
 \lstset{style=mystyle}
 
-\title{%
-	0SumBot\\\\
-	\tiny{very tiny documentation}}
-\date{December 18, 2017}
-\author{Aly Shmahell\\\hyperref[aly.shmahell@gmail.com]{''aly.shmahell@gmail.com''}\\ Department of Computer Science, University of L'Aquila}
-\maketitle
 \begin{document}
+	\title{%
+		0SumBot\\[1ex]
+		\includegraphics[width=64pt,height=12pt]{badge.png}
+	}
+	\author{Aly Shmahell\\%
+		\href{aly.shmahell@gmail.com}{aly.shmahell@gmail.com}
+	}
+	\affil{%
+		3rd Year Student\\
+		Department of Computer Science, University of L'Aquila\\
+		Computational Intelligence in Videogames and Virtual Reality
+		}
+	\date{December 18, 2017}
+	
+	\maketitle
 	\begin{abstract}
 		0SumBot can be described as a sum of two varied approaches to create a bot capable of playing, and sometimes, preferably most times, winning the PlanetWars contest.\\
 		In this effort The need to optimize parameters lead to the creation of 0SumBot, 1SumBot, G0Bot and G0GA.
-	\end{abstract}
+			\end{abstract}
+
 	\section{\textbf{General Description}}
 		0SumBot depends on the following in-game variables: Planet.NumShips(), Planet.GrowthRate(), PlanetWars.Distance(Planet,otherPlanet).\\
 		In order to achieve victory first we set a series of optimized versions of these parameters and compare them to the in-game parameters and then we set (Base, Target, FleetSize) based on the results.\\
 		One way of comparison is by calculating the localMinima of distance between base and enemy planets, and basing our choice of target on the result.\\
 		Another method that is followed is comparing each planet directly to optimized parameters to formulate a plan of attack.\\
-		Methods of comparison are not totally exclusive, and we usually use them entwined.\\\\
-		1SumBot is an alteration of 0SumBot that includes a localMinima for (Base, Enemy), (Base, Neutral) and (Base, Ally), then changes the strategy to include these additional parameters.\\\\
-		G0Bot is a copy of 0SumBot used for the G0GA genetic algorithm.\\\\
+		Methods of comparison are not totally exclusive, and we usually use them entwined.\\
+		1SumBot is an alteration of 0SumBot that includes a localMinima for (Base, Enemy), (Base, Neutral) and (Base, Ally), then changes the strategy to include these additional parameters.\\
+		G0Bot is a copy of 0SumBot used for the G0GA genetic algorithm.\\
 		G0GA is a genetic algorithm designed for the purpose of fine-tuning the parameters of G0Bot for a more efficient battle strategy.
 \section{Notes on the bots}
 In order to avoid player timeout, make sure to check if planet is null before you make any operation involving that selected planet.\\
@@ -130,10 +140,13 @@ localMinima =  pw.Distance(base,closestEnemy);
 		\item Improving the map shuffling process in G0GA.
 		\item Accessing and use more in-game variables in G0Bot, like Fleet variables for example.
 	\end{itemize}
-\newpage
-\section{\textbf{Code Repository}}
-A Github repository exists for this project under:\\
-\begin{center}
-	\url{https://github.com/AlyShmahell/PlanetWars-0Sum}
-\end{center}
+\begin{flushleft}
+	\section{\textbf{Code Repository}}
+\end{flushleft}
+\begin{flushleft}
+	A Github repository exists for this project under:\\
+\end{flushleft}
+	\begin{center}
+		\url{https://github.com/AlyShmahell/PlanetWars-0Sum}
+	\end{center}
 \end{document}
