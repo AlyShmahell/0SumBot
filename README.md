@@ -5,4 +5,4 @@ Author: Aly Shmahell, 3rd year student, Department of Computer Science, Universi
 Course: Computational Intelligence in Videogames and Virtual Reality.  
 Supervisor: [Prof. Antonio Mora Garcia](https://github.com/amorag)  
 0SumBot ranked 4th place on the [First L'Aquila International PLANET WARS Competition](http://challonge.com/es/1m1t694g)  
-![Course Contest Ranking](./documentation/1m1t694g.svg)
+![Course Contest Ranking](./documentation/1m1t694g.png)
