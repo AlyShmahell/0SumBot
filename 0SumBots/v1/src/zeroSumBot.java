@@ -35,39 +35,39 @@ public class zeroSumBot {
     /**
      * optimized for Player's total number of ships to total ship production ratio
      */
-    double oPWNumShipsProduction1 = 0.9249231599024564;
+    double oPWNumShipsProduction1 = 0.16584051799466915;
     /**
      * optimized for player's base planet's total number of ships
      */
-    int oPNumShips = 228;
+    int oPNumShips = 221;
     /**
      * optimized for player's base planet's growth rate
      */
-    int oPGrowthRate = 0;
+    int oPGrowthRate = 47;
     /**
      * optimized for enemy's target planet's total number of ships
      */
-    int oENumShips = 26;
+    int oENumShips = 21;
     /**
      * optimized for enemy's target planet's growth rate
      */
-    int oEGrowthRate = 33;
+    int oEGrowthRate = 26;
     /**
      * optimized for neutrals' target planet's total number of ships
      */
-    int oNNumShips = 81;
+    int oNNumShips = 120;
     /**
      * optimized for neutrals' target planet's growth rate
      */
-    int oNGrowthRate = 34;
+    int oNGrowthRate = 3;
     /**
      * optimized for good striking distance
      */
-    int oDistance = 35;
+    int oDistance = 24;
     /**
      * optimized for player's division of base ships into remaining base ships and base fleet
      */
-    int fleetDivider = 3;
+    int fleetDivider = 17;
     /**
      * map dispersion
      */

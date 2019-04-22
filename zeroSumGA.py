@@ -1,4 +1,4 @@
-from pygga import Genotype, Phenotype, Problem, PyGGA, Pretty, Oneliner, TimeLine
+from pygga import Genotype, Phenotype, Problem, Pretty, Oneliner, TimeLine
 import os
 import sys
 import random
@@ -17,7 +17,6 @@ class PlanetWarsTimeLine(TimeLine):
                                 ]
                                 for _ in range(3)
                             ]
-# [0.2784893981486769, 0.38950074536665236, 0.07152654832896899, 0.10122634299559163, 0.6424346308804659, 0.14345635870188023, 0.6020502788403828, 0.059783946461369086, 0.4366834609070118, 0.24997999635656587]
 
 
 class PlanetWarsProblem(Problem):
@@ -143,19 +142,5 @@ class PlanetWarsProblem(Problem):
             mutation = 0.01
         cls.children[i].genome[index] += mutation
         if cls.children[i].genome[index] > 1.0:
-            cls.children[i].genome[index]-=1.0
+            cls.children[i].genome[index] -= 1.0
         return cls.children[i]
-
-
-if __name__ == '__main__':
-    pygga = PyGGA(problem = PlanetWarsProblem(),
-                  generations=10,
-                  population_size=10,
-                  tournament_size=2,
-                  elitism_percentage=1.0,
-                  crossover_probability=0.7,
-                  mutation_probability=0.1,
-                  timeline = PlanetWarsTimeLine)
-    optimus = pygga()
-    optimus()
-    print(f"{optimus}")
